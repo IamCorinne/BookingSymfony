@@ -1,4 +1,7 @@
 {
+    "cocur/slugify": {
+        "version": "v4.0.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -104,6 +107,9 @@
     },
     "egulias/email-validator": {
         "version": "2.1.15"
+    },
+    "fzaninotto/faker": {
+        "version": "v1.9.1"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"

@@ -1,5 +1,15 @@
+# config/packages/doctrine.yaml
+
+parameters:
+    # Permet de passer cette url en tant que variable d'environnement
+    env(DATABASE_URL): ''
+
+
 doctrine:
     dbal:
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
         url: '%env(resolve:DATABASE_URL)%'
 
         # IMPORTANT: You MUST configure your server version,
