@@ -1,0 +1,27 @@
+body
+{
+    background-color:#f3efef;
+}
+
+.container
+{
+    margin-top:1.2em;
+}
+
+.ad-title
+{
+    background-size:covre;
+    background-position: center center;
+    padding:1em;
+}
+.ad-title .container
+{
+    margin-top:0;
+}
+.ad-title .h1,
+.ad-title .p
+{
+    color:#fff;
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+

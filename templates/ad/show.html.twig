@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ad.title}}
+{% endblock %}
+
+{% block body %}
+<div class="ad-title" style="background-image:url({{ad.coverImage}})">
+<div class="container">
+<h1>{{ad.title}}</h1>
+<p>{{ad.introduction}}</p>
+<p class="h5">{{ad.rooms}} chambres pour <strong>{{ad.price}} &euro; /nuit</strong></p>
+<a href="#" class="btn btn-warning">Réservez ici !</a>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-8 mb-3">{{ad.content|raw}}
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+    {% for image in ad.images %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" class="{% if loop.first %}active{% endif %}"></li>
+    {% endfor %}
+    </ol>
+
+    <div class="carousel-inner">
+    {# relation one to many pour faire une boucle et récupérer les données #}
+    {% for image in ad.images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+        <img src="{{image.url}}" class="d-block w-100" alt="{{ad.title}}">
+        <div class="carousel-caption d-none d-md-block">
+            <h5>{{ad.title}}</h5>
+            <p>{{image.caption}}</p>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+    
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Précédent</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Suivant</span>
+    </a>
+    </div>
+</div>
+<div class="col"> 
+    <div class="row">
+        <div class="col-4"><img src="http://placeholder.it/64x64"></div>
+        <div class="col"><h3>John Doe</h3><span class="badge badge-warning">3 annonces</span></div>
+    </div>
+    <p>Hanc regionem praestitutis celebritati diebus invadere parans dux ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum indicio proditus, qui admissi flagitii metu exagitati ad praesidia descivere Romana. absque ullo egressus effectu deinde tabescebat immobilis.</p>
+</div>
+</div>
+</div>
+
+{% endblock %}
