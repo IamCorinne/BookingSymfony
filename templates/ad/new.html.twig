@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{# on indique l'utilisation d'un thème de mise en page qu'on défini ailleurs. Ici le thème est défini plus bas dans la même page on indique donc le chemin par _self #}
+{# et bien c'était avant de mettre un thème boostrap dans config/packages/twig.yaml
+{% form_theme formAdvert _self %} #}
+
+{# 
+on personalise donc le thème
+{% form_theme form _self %}
+#}
+{# new thème avec la création de la page ad/_collection et ainsi eviter de se répéter, on refactorise #}
+{% form_theme form 'ad/_collections.html.twig'%}
+{% block body %}
+<div class="container">
+<h2>Créez votre nouvelle annonce</h2>
+
+{# début du form comme la balise <form> #}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn btn-primary">Créer</button>
+{# fin du form comme la balise </form> #}
+{{ form_end(form) }}
+</div>
+{% endblock %}
+

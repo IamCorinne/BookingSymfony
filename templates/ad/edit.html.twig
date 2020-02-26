@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'une annonce {% endblock %}
+
+{# 
+on personalise donc le thème
+{% form_theme form _self %}
+#}
+{# new thème avec la création de la page ad/_collection et ainsi eviter de se répéter, on refactorise #}
+{% form_theme form 'ad/_collections.html.twig'%}
+{% block body %}
+<div class="container">
+<h2>Modifiez votre annonce</h2>
+
+{# début du form comme la balise <form> #}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn btn-primary">Enregistrer</button>
+{# fin du form comme la balise </form> #}
+{{ form_end(form) }}
+</div>
+{% endblock %}

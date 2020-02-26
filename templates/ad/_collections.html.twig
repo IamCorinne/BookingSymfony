@@ -1,0 +1,58 @@
+{# faire l'affichage du sous formulaire des images des annonces en identifiant le input et autre à modifier (aide avec outils: déveloopement/afficher le code source etc)#}
+{% block _annonce_images_widget %}
+<p>Ajoutez une image supplémentaire</p>
+{#ajout du champs caché pour javascript la valeur 0 chiffre initial du compte à rebourd #}
+<input type="hidden" id="widget-count" value="0"/>
+<button type="button" class="btn btn-info" id="add-image">Ajoutez une image </button>
+{{ form_widget (form) }}
+{% endblock %}
+
+{# faire l'affichage du sous formulaire#}
+{% block _annonce_images_entry_row %}
+{{ form_widget (form) }}
+{% endblock %}
+
+{# personnaliser l'affichage pour obtenir deux colomnes#}
+{% block _annonce_images_entry_widget %}
+{#l'id est donc dynamique#}
+<div class="form-group" id="bloc_{{id}}">
+<div class="row">
+    <div class="col-md-10 col-10">
+    <div class="row"> 
+        <div class="col">{{ form_widget (form.url) }} </div>
+        <div class="col">{{ form_widget (form.caption) }} </div>
+    </div>
+    </div>
+    <div class="col-md-2 col-2">
+    <button type="button" class="btn btn-danger" data-action="delete" data-target="#bloc_{{id}}">X</button>
+    </div>
+</div>    
+</div>
+{% endblock %}
+
+    
+    
+
+{# pour utiliser les thèmes de mise en form du formulaire ici dans une div on défini nos besoins pour chaque spécifité proposées par symfony#}
+{# et bien c'était avant de mettre un thème boostrap dans config/packages/twig.yaml
+{% block form_row %}
+    <div class="form-group">
+    {{ form_label(form) }}
+    {{ form_widget(form) }}
+    </div>
+{% endblock %}
+{% block text_widget %}
+    <input type="text" name="{{ full_name }}" id="{{ id }}" class="form-control"/>
+{% endblock %}
+{% block textarea_widget %}
+    <textarea name="{{ full_name }}" id="{{ id }}" class="form-control" cols="30" rows="10"></textarea>
+{% endblock %}
+{% block file_widget %}
+    <input type="file" name="{{ full_name }}" id="{{ id }}" class="form-control"/>
+{% endblock %}
+{% block number_widget %}
+    <input type="number" name="{{ full_name }}" id="{{ id }}" class="form-control"/>
+{% endblock %} #}
+
+{% block javascripts %}{% endblock %}
+ 

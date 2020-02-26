@@ -6,10 +6,17 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+//pour la validation des champs en annotations champs par champs
+use Symfony\Component\Validator\Constraints as Assert;
+//pour la validation des champs en annotations au global
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(
+ * fields={"title"},
+ * message="Une autre annonce a déjà ce titre, veuillez en changer.")
  */
 class Ad
 {
@@ -22,6 +29,11 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     * min=10,
+     * max=255,
+     * minMessage="Le titre doit faire plus de 10 caractères.",
+     * maxMessage="Votre titre est trop long, max 255 caractères.")
      */
     private $title;
 
@@ -37,6 +49,9 @@ class Ad
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     * min=10,
+     * minMessage="Cette intro est un peu courte, elle mérite plus de 10 caractères.")
      */
     private $introduction;
 
@@ -56,8 +71,9 @@ class Ad
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="ad")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="ad",orphanRemoval=true)
      */
+    //orphanRemoval=true pour supprimer les images qui deviennent orphelines suites à une modif, elles n'appartiennent plus à une annonce
     private $images;
 
     public function __construct()
@@ -80,9 +96,6 @@ class Ad
              $this->slug = $slugify->slugify($this->title);
          }
      }
-
-
-
 
     public function getId(): ?int
     {
