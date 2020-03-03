@@ -6,12 +6,12 @@
 
 {% block body %}
 <div class="ad-title" style="background-image:url({{ad.coverImage}})">
-<div class="container">
-<h1>{{ad.title}}</h1>
-<p>{{ad.introduction}}</p>
-<p class="h5">{{ad.rooms}} chambres pour <strong>{{ad.price}} &euro; /nuit</strong></p>
-<a href="#" class="btn btn-warning">Réservez ici !</a>
-</div>
+    <div class="container">
+        <h1>{{ad.title}}</h1>
+        <p>{{ad.introduction}}</p>
+        <p class="h5">{{ad.rooms}} chambres pour <strong>{{ad.price}} &euro; /nuit</strong></p>
+        <a href="#" class="btn btn-warning">Réservez ici !</a>
+    </div>
 </div>
 
 <div class="container">
@@ -48,11 +48,28 @@
     </div>
 </div>
 <div class="col"> 
+{# on crée une variable pour eviter de répeter ad.author, on ecrira a
+ex mg src="{{ ad.author.avatar }}" devient mg src="{{ a.avatar }}" #}
+{# de meme on va créer dans User.php la concatenation  de {{ a.firstname }} {{ a.lastname }} en {{ a.fullName}} #}
+{% set a = ad.author %}
     <div class="row">
-        <div class="col-4"><img src="http://placeholder.it/64x64"></div>
-        <div class="col"><h3>John Doe</h3><span class="badge badge-warning">3 annonces</span></div>
+        <div class="col-4">
+            <a href="{{path('user_show',{'slug':a.slug})}}">
+            <img src="{{ a.avatar }}" alt="{{ a.fullName}}" class="avatar avatar-medium">
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{{path('user_show',{'slug':a.slug})}}">
+            <h3>{{ a.fullName}}</h3>
+            </a>
+            <span class="badge badge-warning">{{ a.ads| length }}{% if a.ads| length >1 %} annonces {% else %} annonce {% endif %}</span>
+        </div>
     </div>
-    <p>Hanc regionem praestitutis celebritati diebus invadere parans dux ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum indicio proditus, qui admissi flagitii metu exagitati ad praesidia descivere Romana. absque ullo egressus effectu deinde tabescebat immobilis.</p>
+
+    <div class="col py-3">
+    {{ a.introduction| raw }}
+    </div>
 </div>
 </div>
 </div>

@@ -6,12 +6,21 @@ use App\Entity\Ad;
 use Faker\Factory;
 //enlevé car géré avec @ORM\HasLifecycleCallbacks dans Entity/Ad.php
 //use Cocur\Slugify\Slugify;
+use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    //suite à la modif dans config/packages/security.yaml pour bcrypt du mdt, on crée la variable privée tjrs pour sécuriser
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder=$encoder;
+    }
+
     public function load (ObjectManager $manager)
     {
         // $product = new Product();
@@ -20,6 +29,47 @@ class AppFixtures extends Fixture
         //on déclare la variable pour utiliser fzaninotto/faker 
         //Factory est une class
         $faker=Factory::create('FR-fr');
+        
+
+////////////////////USERS->utilisateurs///////////////////////
+//on crée la variable user qui est un tableau contenant les users qui s'inscrivent(donc tableau vide)
+//on fait une boucle pour récupérer toutes les valeurs (ici faite avec faker=fausse données)
+$users=[];
+//pour générer un avatar avec faker selon si profil homme ou femme
+$genres=['male','female'];
+
+for($i=1;$i<=10;$i++)
+{
+    //on instancie 
+    $user= new User();
+    //pour générer un avatar avec faker selon si profil homme ou femme
+    $genre=$faker->randomElement($genres);
+    $avatar='https://randomuser.me/api/portraits/';
+    $avatarId=$faker->numberBetween(1,99).'.jpg';
+    $avatar .=($genre=='male'? 'men/':'women/'). $avatarId;
+
+    //pour crypter le mdp
+    $hash=$this->encoder->encodePassword($user,'password');
+    
+    //on hydrate
+    $description="<p>".join("</p><p>",$faker->paragraphs(5))."</p>";
+    $user->setDescription($description)
+        ->setFirstname($faker->firstname)
+        ->setLastname($faker->lastname)
+        ->setEmail($faker->email)
+        ->setIntroduction($faker->sentence())
+        ->setHash($hash)
+        ->setAvatar($avatar)
+        ;
+        //on enregistre
+        $manager->persist($user);
+        $users[]=$user;
+}
+
+
+
+
+////////////////////ADVERT->annonces/////////////////////////        
         //enlevé car géré avec @ORM\HasLifecycleCallbacks dans Entity/Ad.php
         ////on déclare la variable pour utiliser slugify et sa class Slugify
         //$slugify=new Slugify();
@@ -32,22 +82,25 @@ class AppFixtures extends Fixture
 
         $title=$faker->sentence();
         //enlevé car géré avec @ORM\HasLifecycleCallbacks dans Entity/Ad.php
-        $slug=$slugify->slugify($title);
+        //$slug=$slugify->slugify($title);
         $coverImage=$faker->imageUrl(1000,350);
         $introduction=$faker->paragraph(2);
         $content="<p>".join("</p><p>",$faker->paragraphs(5))."</p>";
+        //on crée l'user, l'auteur (ici l'auteur est aléatoire car on utilise faker pour l'exemple)
+        $user=$users[mt_rand(0,count($users)-1)];
 
         //avant faker
         //$ad->setTitle("titre de l'annonce n° $i")
         //avec faker on utilise $title défini plus haut $title=$faker->sentence();
         $ad->setTitle($title)
         //enlevé car géré avec @ORM\HasLifecycleCallbacks dans Entity/Ad.php
-            ->setSlug($slug)
+            //->setSlug($slug)
             ->setCoverImage($coverImage)
             ->setIntroduction($introduction)
             ->setContent($content)
             ->setPrice(mt_rand(30,300))
             ->setRooms(mt_rand(2,5))
+            ->setAuthor($user)
         ;
         
         $manager->persist($ad);

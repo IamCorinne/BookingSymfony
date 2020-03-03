@@ -1,0 +1,24 @@
+{% set url=path('ads_single',{'slug':ad.slug}) %}
+
+<div class="col-md-4">
+<div class="card mt-2 mb-2">
+<div class="card-header bg-primary text-light">
+{# avec twig on récupère les données#}
+Logement {{ad.rooms}} chambre(s) <span>{{ad.price}}€/nuit</span>
+</div>
+<div class="card-body">
+{# la route 'ads_list' est déjà paramétrée dans Ad controller en annotations pour : Permet d'afficher une annonce; et dans les accolades on récupère un tableau de slug récupéré#}
+{# ok parfait mais répition ici et environ ligne 31 on va donc créer une variable url ligne 15#}
+    {# <a href="{{path('ads_single',{'slug':ad.slug})}}"> #}
+    <a href="{{ url }}">
+        <h4>{{ad.title}}</h4>
+        <img src="{{ad.CoverImage}}" alt="{{ad.title}}" class="img-fluid">
+    </a>
+    <p>{{ad.introduction}}.</p>
+    {# répetition 2 de la route#}
+    {# <a href="{{path('ads_single',{'slug':ad.slug})}}" class="btn btn-info">+ d'infos</a> #}
+    <a href="{{ url }}" class="btn btn-info">+ d'infos</a>
+</div>
+<div class="card-footer  text-muted"><span>Pas encore noté</span></div>
+</div>
+</div>

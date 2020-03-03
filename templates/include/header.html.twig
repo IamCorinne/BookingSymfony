@@ -5,15 +5,38 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
+
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{{path('homePage')}}">Accueil</a>
                 </li>
                 </ul>
+
+
                 <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Mon compte</a>
+                {# si l'utilisateur est connecté app.user existe déjà dans symfony #}
+                {% if app.user %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="accountDropdownLink" data-toggle="dropdown">
+                        <img src="{{ app.user.avatar}}" alt="avatar de {{ app.user.fullName}}" class="avatar avatar-small"/>
+                        {{ app.user.fullName}}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                        <a class="dropdown-item" href="{{path('ads_create')}}">Créer une annonce</a>
+                        <a class="dropdown-item" href="{{path('account_home')}}">Mon compte</a>
+                        <a class="dropdown-item" href="{{path('account_profile')}}">Modifier mon profil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{path('account_logout')}}">Déconnexion</a>
+                    </div>
                 </li>
+               {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('account_register')}}">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('account_login')}}">Connexion</a>
+                </li>
+                 {% endif %}
                 </ul>
             
             </div>

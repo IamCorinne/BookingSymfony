@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Ad;
 use App\Form\ImageType;
+use App\Form\ApplicationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,9 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class AnnonceType extends AbstractType
+//avant : mais on a refactorisé la fonction private function getConfiguration qui était utilisée plusieurs fois du coup on a intégré la class AbstractType dans la  class ApplicationType, ainsi on appelle les 2 class en appelant cette dernière 
+//avant =>class AnnonceType extends AbstractType
+class AnnonceType extends ApplicationType
 {
-    /**
+    /* ca aussi c'est refactorisé dans Applicationtype 
      * permet d'avoir la config de base d'un champs de formulaire
      *
      * @param string $label
@@ -26,7 +29,8 @@ class AnnonceType extends AbstractType
      * @param array $options
      * @return array
      */
-    //on crée une fonction privée car uniquement utilisable dans cette class pour éviter de répéter le label et attribut de $builder + options en 3° paramètre
+
+/* avant => //on crée une fonction privée car uniquement utilisable dans cette class pour éviter de répéter le label et attribut de $builder + options en 3° paramètre
     private function getConfiguration($label,$placeholder,$options=[])
     {
         // retourne donc un tableau de données (on rajoute array_merge pour fusionner deux tableau le premier avec les annotations@ et paramètre de la () de la fonction et le 3° param qui est lui aussi un tableau)
@@ -35,7 +39,7 @@ class AnnonceType extends AbstractType
             'attr'=>['placeholder'=>$placeholder]
             ],
             $options);
-    }
+    } */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

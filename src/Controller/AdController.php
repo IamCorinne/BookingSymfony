@@ -92,6 +92,8 @@ class AdController extends AbstractController
                $manager->persist($image);
            }
 
+           //lier l'annonce à l user
+            $ad->setAuthor($this->getUser());
            //on demande à doctrine d'enregistrer dans la BDD dans l'objet $manager
            $manager->persist($ad);
            $manager->flush();
