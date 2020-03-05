@@ -6,6 +6,7 @@ use App\Entity\Ad;
 use Faker\Factory;
 //enlevé car géré avec @ORM\HasLifecycleCallbacks dans Entity/Ad.php
 //use Cocur\Slugify\Slugify;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -31,7 +32,26 @@ class AppFixtures extends Fixture
         $faker=Factory::create('FR-fr');
         
 
+
 ////////////////////USERS->utilisateurs///////////////////////
+//gestion des roles selon si adm utilisateurs
+//role admin global
+$adminRole=new Role();
+$adminRole->setTitle("ROLE_ADMIN");
+$manager->persist($adminRole);
+//role utilisateur admin partiel
+$adminUser=new User();
+$adminUser  ->setFirstName('Iam')
+            ->setLastName('Corinne')
+            ->setEmail('sauviacc@hotmail.fr')
+            ->setHash($this->encoder->encodePassword($adminUser,'password'))
+            ->setAvatar('https://vendeephoto.fr/wp-content/uploads/2019/05/pexels-photo-1770310.jpeg')
+            ->setIntroduction($faker->sentence())
+            ->setDescription("<p>".join("</p><p>",$faker->paragraphs(5))."</p>")
+            ->AddUserRole($adminRole)
+            ;
+$manager->persist($adminUser);
+
 //on crée la variable user qui est un tableau contenant les users qui s'inscrivent(donc tableau vide)
 //on fait une boucle pour récupérer toutes les valeurs (ici faite avec faker=fausse données)
 $users=[];

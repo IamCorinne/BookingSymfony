@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -83,6 +84,7 @@ class AccountController extends AbstractController
     /**
      * Visuel du profil utilisateur avec modif possible
      * @Route("/account/profile", name="account_profile")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function profile(Request $request, EntityManagerInterface $manager)
@@ -106,6 +108,7 @@ class AccountController extends AbstractController
     /**
      * pour modifier le mdp
      * @Route("/account/password", name="account_password")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function updatePassword(Request $request,UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
@@ -144,7 +147,7 @@ class AccountController extends AbstractController
     /**
      * permet d'afficher la page mon compte
      * @Route("/account",name="account_home")
-     *
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function myAccount()

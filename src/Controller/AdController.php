@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -40,7 +42,8 @@ class AdController extends AbstractController
 
     /**
      * Permet d'afficher et de créer le form pour créer une annonce
-     * @Route("/ads/new", name="ads_create")
+     * @Route("/ads/new",name="ads_create")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     //pour utiliser $manager et faire le CRUD on a besoin de ObjectManager(ben non ca sera EntityManager) pour créer une instance
@@ -133,7 +136,7 @@ class AdController extends AbstractController
     /**
      * Permet de modifier une annonce
      * @Route("/ads/{slug}/edit", name="ads_edit")
-     *
+     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()",message="Vous ne pouvez pas mofifier une annonce ne vous appartenant pas.")
      * @return Response
      */
     public function edit(Ad $ad,Request $request,EntityManagerInterface $manager )
@@ -156,5 +159,19 @@ class AdController extends AbstractController
             return $this->redirectToRoute('ads_single',['slug'=>$ad->getSlug()]);
         }
         return $this->render('ad/edit.html.twig',['form'=>$form->createView(),'ad'=>$ad]);
+    }
+/**
+ * Suppression d'une annonce
+ * @Route("ads/{slug}/delete",name="ads_delete")
+ *
+ * @param Ad $ad
+ * @return void
+ */
+    public function delete(Ad $ad,EntityManagerInterface $manager)
+    {
+        $manager->remove($ad);
+        $manager->flush();
+        $this->addFlash("success","L'annonce <em>{$ad->getTitle()}</em> a bien été supprimées");
+        return $this->redirectToRoute("ads_list");
     }
 }

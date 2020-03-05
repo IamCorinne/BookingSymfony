@@ -86,6 +86,11 @@ class User implements UserInterface
     private $ads;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
+     */
+    private $userRoles;
+
+    /**
      * Création de cette fonction pour concaténer nom et prénom et eviter de se répéter dans show.html.twig
      *
      */
@@ -97,6 +102,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->ads = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
     /**
@@ -250,7 +256,12 @@ class User implements UserInterface
     //roles adm ou utilisitateur classic
     public function getRoles()
     {
-        return ['ROLES_USER'];
+        $roles= $this->userRoles->map(function($role)
+        {
+            return $role->getTitle();
+        })->toArray();
+        $roles[]='ROLE_USER';
+        return $roles;
     }
     //retourne le mdp
     public function getPassword()
@@ -266,4 +277,32 @@ class User implements UserInterface
     }
     //y a t il des data confidentielles à supp
     public function eraseCredentials(){}
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            $userRole->removeUser($this);
+        }
+
+        return $this;
+    }
 }

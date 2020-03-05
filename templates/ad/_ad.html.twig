@@ -18,6 +18,11 @@ Logement {{ad.rooms}} chambre(s) <span>{{ad.price}}€/nuit</span>
     {# répetition 2 de la route#}
     {# <a href="{{path('ads_single',{'slug':ad.slug})}}" class="btn btn-info">+ d'infos</a> #}
     <a href="{{ url }}" class="btn btn-info">+ d'infos</a>
+
+    {% if app.user and app.user == ad.author %}
+    <a href="{{path('ads_edit',{'slug':ad.slug})}}" class="btn btn-info">Modifier l'annonce</a>
+    {% endif %}
+
 </div>
 <div class="card-footer  text-muted"><span>Pas encore noté</span></div>
 </div>
