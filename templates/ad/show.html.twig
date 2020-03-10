@@ -10,7 +10,7 @@
         <h1>{{ad.title}}</h1>
         <p>{{ad.introduction}}</p>
         <p class="h5">{{ad.rooms}} chambres pour <strong>{{ad.price}} &euro; /nuit</strong></p>
-        <a href="#" class="btn btn-warning">Réservez ici !</a>
+        <a href="{{path('booking_create',{'slug':ad.slug})}}" class="btn btn-warning">Réservez ici !</a>
         {% if app.user and app.user == ad.author %}
         <a href="{{path('ads_edit',{'slug':ad.slug})}}" class="btn btn-info">Modifier l'annonce</a>
         <a href="{{path('ads_delete',{'slug':ad.slug})}}" class="btn btn-danger" onclick="return confirm(`Cette action est irrévocable`)">Supprimer l'annonce</a>

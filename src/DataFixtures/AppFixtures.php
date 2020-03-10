@@ -9,6 +9,7 @@ use Faker\Factory;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Image;
+use App\Entity\Booking;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -137,6 +138,35 @@ for($i=1;$i<=10;$i++)
 
             //on sauvegarde
             $manager->persist($image);
+        }
+
+        //Gestion des réservations
+        for($k=1;$k<=\mt_rand(0,5);$k++)
+        {
+            //on crée une nouvelle réservation
+            $booking=new Booking();
+            $createdAt = $faker->dateTimeBetween('-6 months');
+            $startDate= $faker->dateTimeBetween('-3 months');
+            $duration = mt_rand(3,10);
+            $endDate = (clone $startDate)->modify("+ $duration days");
+            $amount = $ad->getPrice()* $duration;
+
+            //lier le booker = le user qui reserve
+            $booker = $users[mt_rand(0,count($users)-1)];
+            $comment = $faker->paragraph();
+
+            //configurer la réservation de base
+            $booking->setBooker($booker)
+                    ->setAd($ad)
+                    ->setStartDate($startDate)
+                    ->setEndDate($endDate)
+                    ->setCreatedAt($createdAt)
+                    ->setAmount($amount)
+                    ->setComment($comment)
+                    ;
+
+            //persister les datas
+            $manager->persist($booking);
         }
 
         }

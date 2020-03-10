@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire de réservation{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>{% endblock %}
+
+{% block body %}
+<main class="container mt-5">
+
+<h1 class="h2">Réservation pour :</br>
+<small>{{ad.title}}</small></h1>
+
+<h6>Vous allez réserver le bien de <strong><em>{{ad.author.fullName}}</em></strong>.</br>
+Voir plus de bien de ce 
+<a href="{{path('user_show',{'slug':ad.author.slug})}}">loueur.<img src="{{ad.author.avatar}}"alt="{{ ad.author.fullName}}" class="avatar avatar-small"></a>
+</h6>
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col">{{ form_row (form.startDate) }}</div>
+        <div class="col">{{ form_row (form.endDate) }}</div>
+        <div class="col">
+        <h4>Montant du séjour: <span id="amount">...</span> &euro;</h4>
+        <span id="days">0</span> nuit(s) à {{ad.price}} &euro; /nuit</span>
+        </div>
+    </div>
+    
+    <h3>{{ form_row (form.comment) }}</h3>
+    <button type="submit" class="btn btn-info">Réserver</button>
+    <a href="{{path('ads_single',{'slug':ad.slug})}}" class="btn btn-secondary">Retour</a>
+    {{form_end(form)}}
+
+</main>
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script> 
+//personnalisation du calendrier et des dates
+$(document).ready(function()
+{
+    $('#booking_startDate,#booking_endDate').datepicker(
+        //les options de format etc (info sur https://bootstrap-datepicker.readthedocs.io/en/stable/options.html#format)
+        {
+            format:'dd/mm/yyyy',
+            startDate: new Date(),
+            weekStart:(1),
+            datesDisabled:
+            [
+                //on fait une boucle
+                {% for day in ad.notAvailableDays %}
+                "{{ day.format('d/m/Y')}}",
+                {% endfor %}
+            ]
+        }
+    );
+    //initialisation de la fonction écrite plus bas pour le calcule du montant de la résa par rapport au nbr de nuit
+    $('#booking_startDate,#booking_endDate').on('change',calculateAmount);
+
+});
+//Calcul du montant de la réservation
+function calculateAmount()
+{
+    //calculer l'interval entre deux dates
+        //on instancie les dates et on veut les valeurs. Sauf que ces valeurs il faut les transformer. on remplace donc la date ou plutôt son format récupérable grace aux expressions régulières et on reordonne dans le sens souhaité
+    const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/,'$3-$2-$1'));
+    const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/,'$3-$2-$1'));
+    
+        //on compare les deux avec getTime pour convertir en mmseconde depui 1970
+        if(startDate && endDate && startDate < endDate)
+        {
+            const dayTime = 24*60*60*1000;
+            const interval = endDate.getTime() - startDate.getTime();
+            const days = interval / dayTime;
+        
+    
+    //on multiplie cet interval par le prix dfe la chambre
+    const amount = days * {{ ad.price }};
+
+    //insertion du montant de la réserva dans book.html.twig grace à l'id=amount et days
+    $('#days').text(days);
+    $('#amount').text(amount.toLocaleString('fr-FR'));
+}
+}
+</script>
+
+{% endblock %}

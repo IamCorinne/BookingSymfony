@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accès non autorisé{% endblock %}
+
+{% block body %}
+<div class="container mt-5 text-center ">
+<h3>Oups! L'accès ne vous est pas autorisé.</h3>
+<div class="text-center mt-5">
+<a href="{{path('homePage')}}" class="btn btn-primary">Retour à l'accueil</a>
+<a href="{{path('ads_list')}}" class="btn btn-success">Retour aux annonces</a>
+</div>
+</div>
+{% endblock %}

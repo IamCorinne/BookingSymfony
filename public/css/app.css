@@ -3,6 +3,14 @@ body
     background-color:#f3efef;
 }
 
+a
+{
+    color:indianred;
+}
+a:hover {
+    color: indianred;
+}
+
 .container
 {
     margin-top:1.2em;
@@ -49,4 +57,11 @@ footer
 {
     max-width: 32px;
     max-height: 32px;
+}
+
+
+.datepicker table tr td.disabled,
+.datepicker table tr td.disabled:hover
+{
+    text-decoration: line-through;
 }

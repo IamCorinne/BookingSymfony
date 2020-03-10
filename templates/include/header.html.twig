@@ -10,6 +10,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{path('homePage')}}">Accueil</a>
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{path('ads_list')}}">Annonces</a>
+                </li>
                 </ul>
 
 
@@ -24,6 +27,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
                         <a class="dropdown-item" href="{{path('ads_create')}}">Créer une annonce</a>
                         <a class="dropdown-item" href="{{path('account_home')}}">Mon compte</a>
+                        <a class="dropdown-item" href="{{path('account_bookings')}}">Mes réservations</a>
                         <a class="dropdown-item" href="{{path('account_profile')}}">Modifier mon profil</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{path('account_logout')}}">Déconnexion</a>

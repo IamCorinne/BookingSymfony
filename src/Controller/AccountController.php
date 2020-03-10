@@ -154,4 +154,15 @@ class AccountController extends AbstractController
     {
         return $this->render("user/index.html.twig",['user'=>$this->getUser()]);
     }
+
+    /**
+     * permet d'afficher la page avec les réservations du client
+     * @Route("/account/bookings",name="account_bookings")
+     * @IsGranted("ROLE_USER")
+     * @return Response
+     */
+    public function bookings()
+    {
+        return $this->render('account/bookings.html.twig');
+    }
 }
