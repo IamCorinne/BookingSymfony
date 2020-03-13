@@ -24,6 +24,14 @@ Logement {{ad.rooms}} chambre(s) <span>{{ad.price}}€/nuit</span>
     {% endif %}
 
 </div>
-<div class="card-footer  text-muted"><span>Pas encore noté</span></div>
+
+
+<div class="card-footer  text-muted">
+{% if ad.comments | length > 0 %}
+{% include 'include/rating.html.twig' with {'rating': ad.averageRatings}%} sur {{ad.comments|length}} avis. 
+{% else %}
+<span>Pas encore noté</span>
+{% endif %}
+</div>
 </div>
 </div>

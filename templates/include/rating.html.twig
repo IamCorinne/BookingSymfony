@@ -1,0 +1,9 @@
+    <span class="rating">
+            {% for i in 1..5 %}
+                {% if i <= rating %}
+                <img src="https://img.icons8.com/doodle/20/000000/star--v1.png"/>
+                {% else %}
+                <img src="https://img.icons8.com/office/20/000000/star--v1.png"/>
+                {% endif %}
+            {% endfor %}
+    </span>

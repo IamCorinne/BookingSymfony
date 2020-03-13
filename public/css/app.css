@@ -65,3 +65,14 @@ footer
 {
     text-decoration: line-through;
 }
+
+blockquote
+{
+    font-style: oblique;
+    color: rgb(90, 81, 81);
+}
+
+.verySmall
+{
+    font-size: xx-small;
+}

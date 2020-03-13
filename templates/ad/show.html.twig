@@ -50,7 +50,39 @@
         <span class="sr-only">Suivant</span>
     </a>
     </div>
+
+    {# pour les commentaires #}
+<hr/>
+{% if ad.comments| length >0 %}
+<h3>Commentaires des voyageurs</h3>
+<div class="alert alert-info">
+    <h4 class="alert-heading h5">
+    <div class="row align-items-center">
+        <div class="col-8">
+        Note globale données par les voyageurs:<br/>
+        </div>
+        <div class="col-4">
+         {% include 'include/rating.html.twig' with {'rating': ad.averageRatings} %}
+         <br/>
+        <small>Nbr d'avis: {{ ad.comments|length }}</small>
+        </div>
+    </div>
+    </h4>
 </div>
+{% for comment in ad.comments %}
+    <div class="bg-light-rounded">
+        <p><strong>{{ comment.author.fullName }}</strong> a dit : </p>
+        <blockquote>{{ comment.content }}</blockquote>
+        <p>Note donée: {% include 'include/rating.html.twig' with {'rating' : comment.rating } %}</p>
+    </div>
+{% endfor %}
+{% else %}
+<h3 class="h6">Cette annonce n'a pas encore de commentaire.</h3>
+{% endif %}
+
+</div>
+
+
 <div class="col"> 
 {# on crée une variable pour eviter de répeter ad.author, on ecrira a
 ex mg src="{{ ad.author.avatar }}" devient mg src="{{ a.avatar }}" #}
@@ -76,6 +108,7 @@ ex mg src="{{ ad.author.avatar }}" devient mg src="{{ a.avatar }}" #}
     </div>
 </div>
 </div>
+<div class="verySmall"><a href="https://icons8.com/icon/38864/étoile">Étoile icon by Icons8</a></div>
 </div>
 
 {% endblock %}

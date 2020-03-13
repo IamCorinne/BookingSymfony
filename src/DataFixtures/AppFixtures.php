@@ -10,6 +10,7 @@ use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Image;
 use App\Entity\Booking;
+use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -140,6 +141,7 @@ for($i=1;$i<=10;$i++)
             $manager->persist($image);
         }
 
+////////////////////BOOKING->annonces/////////////////////////          
         //Gestion des réservations
         for($k=1;$k<=\mt_rand(0,5);$k++)
         {
@@ -167,6 +169,20 @@ for($i=1;$i<=10;$i++)
 
             //persister les datas
             $manager->persist($booking);
+
+            //gestions des commentaires pour l'exemple une fois sur deux
+            if(mt_rand(0,1))
+            {
+            //on instancie après la réservation le commentaire de l user sur sa résa
+            $comment = new Comment();
+            $comment->setContent($faker->paragraph())
+                    ->setRating(mt_rand(1,5))
+                    ->setAuthor($booker)
+                    ->setAd($ad)
+                    ;
+            //on persist ce commentaire
+            $manager->persist($comment);
+            }
         }
 
         }

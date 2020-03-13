@@ -21,7 +21,7 @@ class ApplicationType extends AbstractType
     protected function getConfiguration($label,$placeholder,$options=[])
     {
         // retourne donc un tableau de données (on rajoute array_merge pour fusionner deux tableau le premier avec les annotations@ et paramètre de la () de la fonction et le 3° param qui est lui aussi un tableau)
-        return array_merge([
+        return array_merge_recursive([
             'label'=>$label,
             'attr'=>['placeholder'=>$placeholder]
             ],
