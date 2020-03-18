@@ -34,7 +34,7 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * 
-     * @Assert\GreaterThan("+1 days",message="La date d'arrivée ne peut pas être aujourd'hui.")
+     * @Assert\GreaterThan("now",message="La date d'arrivée ne peut pas être aujourd'hui.",groups="front")
      * @Assert\LessThan("+1 years", message="Les réservations ne peuvent pas se faire plus d'un an en avance. Merci de votre compréhension.")
      */
     private $startDate;
@@ -67,7 +67,8 @@ class Booking
 
     /**
      * Callback pour chaque réservation
-     *  @ORM\prePersist
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      * @return Response
      */
     public function prePersist()

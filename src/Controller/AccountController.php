@@ -28,7 +28,7 @@ class AccountController extends AbstractController
     {
         //class et outils déjà créés grace à symfony
         $error = $utils->getLastAuthenticationError();
-        //récuperer le dernier utiliosateur = se souvenir de moi
+        //récuperer le dernier utilisateur = se souvenir de moi
         $username=$utils->getLastUsername();
         return $this->render('account/login.html.twig',
             [

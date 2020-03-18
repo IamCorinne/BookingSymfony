@@ -18,7 +18,7 @@ class HomeController extends AbstractController {
      * 
      */
     public function home(){
-        return $this->render('home.html.twig',['title'=>'Titre de la page Youpi']);
+        return $this->render('home.html.twig',['title'=>"Site d'annonces"]);
     }
     
 }

@@ -1,0 +1,123 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edition des annonces{% endblock %}
+
+{% form_theme form _self %}
+{% block body %}
+<div class="container-fluid my-5">
+
+    <h1 class="my-5">Modification de l'annonce : <small>{{ad.title}}</small></h1>
+    <section class="col-md-8 offset-md-2">
+    {{form_start(form)}}
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">Corriger l'annonce ?</h4>
+                </div>
+                <div class="card-body">
+                {{form_widget(form)}}
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary"><img src="https://img.icons8.com/offices/20/000000/ok.png"/> enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">Les réservations</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Voyageur</th>
+                                <th>Date de réservation</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            {% for booking in ad.bookings %}
+                                <tr>
+                                    <td>{{booking.id}}</td>
+                                    <td>{{booking.booker.fullName}}</td>
+                                    <td>{{booking.createdAt|date('d/m/Y')}}</td>
+                                    <td><a href="#" class="btn btn-warning"><img src="https://img.icons8.com/material-two-tone/12/000000/ball-point-pen.png"/></a></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">Les commentaires</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Voyageur</th>
+                                <th>Note</th>
+                                <th>commentaire</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            {% for comment in ad.comments %}
+                                <tr>
+                                    <td>{{comment.id}}</td>
+                                    <td>{{comment.author.fullName}}</td>
+                                    <td>{{comment.rating}}</td>
+                                    <td>{{comment.content}}</td>
+                                    <td><a href="#" class="btn btn-warning"><img src="https://img.icons8.com/material-two-tone/12/000000/ball-point-pen.png"/></a></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {{form_end(form)}}
+    </section>
+</div>
+{% endblock %}
+
+{% block _annonce_images_widget %}
+    {{form_widget(form)}}
+{% endblock %}
+
+{% block _annonce_images_entry_row %}
+    {{form_widget(form)}}
+{% endblock %}
+
+{% block _annonce_images_entry_widget %}
+    <div class="form-group" id="block_{{id}}">
+        <div class="row align-items-center">
+            <div class="col-10 col-md-10">
+                
+                {% if value %}
+                    <div class="col-md-6 col">
+                        <img src="{{value.url}}" alt="" class="img-fluid"/>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 col">
+                {{form_widget(form.caption)}}
+                {{form_errors(form.caption)}}
+            </div>
+            <div class="col-2 col-md-2">
+                <button type="button" class="btn btn-danger btn-sm" data-action="delete" data-target="#block_{{id}}"><img src="https://img.icons8.com/metro/10/000000/clear-symbol.png"/></button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/ad.js"></script>    
+{% endblock %}

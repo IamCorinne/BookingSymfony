@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello AdminAccountController!{% endblock %}
+
+{% block body %}
+ <div class="container-fluid my-5">
+    <h1 class="my-5">Login</h1>
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+        <div class="card bg-light">
+            <div class="card-header">
+                <h1 class="text-center">Booking</h1>
+                <h4 class="card-title text-center"><img src="https://img.icons8.com/bubbles/50/000000/lock.png"/> Connexion à l'administration</h4>
+            </div>
+            <div class="card-body">
+            {% if hasError %}
+            <div class="alert alert-warning"><p>Les informations communiquées sont erronées.</p></div>
+            {% endif %}
+                <form method="post">
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input type="email" name="_username" id="username" placeholder="Votre email" class="form-control" value="{{username}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Votre mot de passe</label>
+                        <input type="password" name="_password" id="password" placeholder="Votre mot de passe" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"><img src="https://img.icons8.com/dusk/20/000000/unlock-2.png"/> Connexion</button>
+                        <a href="{{path('homePage')}}" class="btn btn-link">Retour</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>   
+{% endblock %}

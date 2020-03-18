@@ -58,6 +58,10 @@ footer
     max-width: 32px;
     max-height: 32px;
 }
+.avatar-xs {
+    max-width: 16px;
+    max-height: 16px;
+}
 
 
 .datepicker table tr td.disabled,

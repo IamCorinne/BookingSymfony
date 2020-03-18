@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{# ADMIN #}
+<html lang='fr'>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Hello AdminAccountController!{% endblock %}</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="/css/admin.css">
+        {% block stylesheets %}{% endblock %}
+        
+    </head>
+    
+    <body>
+
+    {# inclure la barre de navigation du menu #}
+    {% include 'admin/inc/header.html.twig'%}
+ 
+        {# configuration des messages flash sous forme de boucle#}
+        {% for label,messages in app.flashes %}
+
+        <div class="container">
+            {# label sera donc warning ou success ...#}
+            <div class="alert alert-{{ label }}">
+            {# selection des messages stockés #}
+            {% for message in messages %}
+            <p>{{ message|raw }}</p>
+            {% endfor %}
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+
+    {% block header %}{% endblock %}
+    {% block body %}{% endblock %}
+    
+    {# inclure le footer #}
+    {% include 'admin/inc/footer.html.twig'%}
+    {% block javascripts %}{% endblock %}
+ 
+    </body>
+</html>
+

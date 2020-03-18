@@ -79,7 +79,7 @@ class BookingController extends AbstractController
                     
             $manager->persist($comment);
             $manager->flush();
-            $this->addFlash("succes","Votre commentaire est bien enregistré. Merci.");
+            $this->addFlash("success","Votre commentaire est bien enregistré. Merci.");
         }
         return $this->render('booking/show.html.twig',['booking'=>$booking,'form'=>$form->createView()]);
     }
