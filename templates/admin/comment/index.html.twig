@@ -6,7 +6,7 @@
 <div class="container-fluid my-5">
     <h1 class="my-5">Gestion des commentaires</h1>
 
-    <div class="row mx-3">
+    
         <table class="table">
             <thead>
                 <th>Id</th>
@@ -19,7 +19,7 @@
                 <th></th>
             </thead>
             <tbody>
-            {% for comment in comments %}
+            {% for comment in pagination.data  %}
             <tr>
                 <td>{{comment.id}}</td>
                 <td>{{comment.createAt|date('d/m/Y H:i')}}</td>
@@ -33,6 +33,11 @@
             {% endfor %}    
             </tbody>
         </table>
-    </div>
+
+        {# La pagination #}
+        {# avant le service display :{% include 'admin/inc/pagination.html.twig'with {'route':'admin_comments_list'}  %}#}
+        {{ pagination.display() }}
+
+    
 </div>
 {% endblock %}

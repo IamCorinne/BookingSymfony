@@ -16,7 +16,7 @@
                 <th>Actions</th>
             </thead>
             <tbody>
-                {% for ad in ads %}
+                {% for ad in pagination.data %}
                 <tr>
                     <td>{{ad.id}}</td>
                     <td>{{ad.title}}</td>
@@ -31,5 +31,10 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {# La pagination #}
+        {# avant le service display :{% include 'admin/inc/pagination.html.twig' with {'route':'admin_ads_list'}  %}#} 
+        {{ pagination.display() }}
+
     </div>
 {% endblock %}
