@@ -13,11 +13,11 @@
         </p>
      </div>
 
-    <h3 class="h1 mt-5">Offres spéciales</h3>
+    <h3 class="h1 mt-5">Les meilleures offres</h3>
 
      <section class="row">
 
-        <article class="col-md-4">
+        {# <article class="col-md-4">
             <div class="card  border-warning mb-3">
                 <h3 class="card-header">3 chambres <strong>500 &euro;/nuit </strong></h3>
                 <img style="height: 200px; width: 100%; display: block;" src="http://placeimg.com/640/480/arch" alt="Card image">
@@ -60,19 +60,33 @@
                     Pas encore notée
                 </div>
                 </div> 
-        </article>
-
+        </article> #}
+        {% for data in ads %}
+        {% include 'ad/_ad.html.twig' with {'ad':data.annonce} %}
+        {% endfor %}
      </section>
 
 
 
 
 
-     <h3 class="h1 mt-5">The best of</h3>
+     <h3 class="h1 mt-5">Nos meilleurs annonceurs</h3>
 
      <section class="row">
+        {% for data in users %}
+        <article class="col">
+            <div class="card  border-primary mb-3">
+                <h3 class="card-header">{{data.user.fullName}}</h3>
+                <div class="card-body">
+                <img style="height: 100px; width: auto; display: inline;" src="{{data.user.avatar}}" alt="avatar de {{data.user.fullName}}" class="float-left mr-3">
+                    <p>{{data.user.introduction}}</p>
+                    <a href="{{path('user_show',{'slug':data.user.slug})}}" class="btn btn-primary">+ d'info</a>
+                </div>
+                
+                </div> 
+        </article>
 
-        <article class="col-md-3">
+        {# <article class="col-md-3">
             <div class="card  border-primary mb-3">
                 <h3 class="card-header">FILL MURRAY</h3>
                 <div class="card-body">
@@ -112,21 +126,10 @@
                     Pas encore notée
                 </div>
                 </div> 
-        </article>
+        </article>  #}
+        
+        {% endfor %}
 
-        <article class="col-md-3">
-            <div class="card  border-primary mb-3">
-                <h3 class="card-header">FILL MURRAY</h3>
-                <div class="card-body">
-                <img style="height: 100px; width: auto; display: inline;" src="https://www.fillmurray.com/640/360" alt="avatar de ..." class="float-left mr-3">
-                    <p>Parce que tu le vaux bien.</p>
-                    <a href="#" class="btn btn-primary">+ d'info</a>
-                </div>
-                <div class="card-footer text-muted   border-primary">
-                    Pas encore notée
-                </div>
-                </div> 
-        </article>
 
 
      </section>

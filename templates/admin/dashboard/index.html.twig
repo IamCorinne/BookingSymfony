@@ -1,0 +1,102 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion du tableau de bord{% endblock %}
+
+{% block body %}
+<div class="container-fluid my-5">
+    <h1 class="my-5">Gestion du tableau de bord</h1>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="card bg-info text-white text-center p-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4"><img src="https://img.icons8.com/cotton/64/000000/name--v2.png"/></div>
+                        <div class="col-8"><h4 class="card-title">{{stats.users}} utilisateurs</h4></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-success text-white text-center p-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4"><img src="https://img.icons8.com/cotton/64/000000/name--v2.png"/></div>
+                        <div class="col-8"><h4 class="card-title">{{stats.ads}} annonces</h4></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-warning text-white text-center p-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4"><img src="https://img.icons8.com/cotton/64/000000/name--v2.png"/></div>
+                        <div class="col-8"><h4 class="card-title">{{stats.bookings}} réservations</h4></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-secondary text-white text-center p-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4"><img src="https://img.icons8.com/cotton/64/000000/name--v2.png"/></div>
+                        <div class="col-8"><h4 class="card-title">{{stats.comments}} avis</h4></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="alert-heading my-3"><img src="https://img.icons8.com/dotty/60/000000/circled-up-right.png"/>Top 5 meilleures des annonces</div>
+            <table class="table table-hover">
+                <thead>
+                    <th>Annonces</th>
+                    <th>Loueurs</th>
+                    <th>Moyenne</th>
+                </thead>
+                <tbody>
+                {% for ad in bestAds %}
+                <tr>
+                    <td>{{ad.title}}</td>
+                    <td><img src="{{ad.avatar}}" alt="{{ad.firstname}}" class="avatar avatar-xs"/>
+                    {{ad.firstname}} {{ad.lastname}}</td>
+                    <td><span class="badge badge-dark">{{ad.note|number_format(1,',','')}}</span></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="col">
+            <div class="alert-heading my-3"><img src="https://img.icons8.com/dotty/60/000000/circled-down-right.png"/>Top 5 des pires annonces</div>
+            <table class="table table-hover">
+                <thead>
+                    <th>Annonces</th>
+                    <th>Loueurs</th>
+                    <th>Moyenne</th>
+                </thead>
+                <tbody>
+                {% for ad in worstAds %}
+                <tr>
+                    <td>{{ad.title}}</td>
+                    <td><img src="{{ad.avatar}}" alt="{{ad.firstname}}" class="avatar avatar-xs"/>
+                    {{ad.firstname}} {{ad.lastname}}</td>
+                    <td><span class="badge badge-dark">{{ad.note|number_format(1,',','')}}</span></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+</div>
+{% endblock %}
